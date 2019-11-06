@@ -1,55 +1,61 @@
-import MagicString from 'magic-string';
+const MagicString = require('magic-string');
 
-export const OLSKRollupSwapTokens = function(param1, param2) {
-	if (typeof param1 !== 'object' || param1 === null) {
-		throw new Error('OLSKErrorInputNotValid');
-	}
+const mod = {
 
-	if (typeof param1.code !== 'string') {
-		throw new Error('OLSKErrorInputNotValid');
-	}
+	OLSKRollupSwapTokens (param1, param2) {
+		if (typeof param1 !== 'object' || param1 === null) {
+			throw new Error('OLSKErrorInputNotValid');
+		}
 
-	if (typeof param2 !== 'object' || param2 === null) {
-		throw new Error('OLSKErrorInputNotValid');
-	}
+		if (typeof param1.code !== 'string') {
+			throw new Error('OLSKErrorInputNotValid');
+		}
 
-	const startIndexMap = Object.keys(param2).reduce(function (coll, item) {
-		const startIndex = param1.code.indexOf(item);
+		if (typeof param2 !== 'object' || param2 === null) {
+			throw new Error('OLSKErrorInputNotValid');
+		}
 
-		if (startIndex !== -1) {
-			coll[item] = startIndex;
-		};
+		const startIndexMap = Object.keys(param2).reduce(function (coll, item) {
+			const startIndex = param1.code.indexOf(item);
 
-		return coll;
-	}, {});
+			if (startIndex !== -1) {
+				coll[item] = startIndex;
+			};
 
-	if (!Object.keys(startIndexMap).length) {
-		return null;
-	}
+			return coll;
+		}, {});
 
-	let magicString = Object.keys(startIndexMap).reduce(function (coll, item) {
-		(function ReplaceNextToken() {
-			const endIndex = startIndexMap[item] + item.length;
+		if (!Object.keys(startIndexMap).length) {
+			return null;
+		}
 
-			coll.overwrite(startIndexMap[item], endIndex, param2[item]);
+		let magicString = Object.keys(startIndexMap).reduce(function (coll, item) {
+			(function ReplaceNextToken() {
+				const endIndex = startIndexMap[item] + item.length;
 
-			startIndexMap[item] = param1.code.slice(endIndex).indexOf(item);
+				coll.overwrite(startIndexMap[item], endIndex, param2[item]);
 
-			if (startIndexMap[item] === -1) {
-				return;
-			}
+				startIndexMap[item] = param1.code.slice(endIndex).indexOf(item);
 
-			startIndexMap[item] += endIndex;
+				if (startIndexMap[item] === -1) {
+					return;
+				}
 
-			ReplaceNextToken();
-		})();
+				startIndexMap[item] += endIndex;
 
-		return coll;
-	}, new MagicString(param1.code));
+				ReplaceNextToken();
+			})();
 
-	return Object.assign({
-		code: magicString.toString(),
-	}, param1.map ? {
-		map: magicString.generateMap({ hires: true }),
-	} : {});
+			return coll;
+		}, new MagicString(param1.code));
+
+		return Object.assign({
+			code: magicString.toString(),
+		}, param1.map ? {
+			map: magicString.generateMap({ hires: true }),
+		} : {});
+	},
+
 };
+
+Object.assign(exports, mod);
