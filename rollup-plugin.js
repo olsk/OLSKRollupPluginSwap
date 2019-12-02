@@ -1,7 +1,7 @@
-import { OLSKRollupSwapTokens } from './main.js';
+const { OLSKRollupSwapTokens } = require('./main.js');
 
-import { createFilter } from 'rollup-pluginutils';
-export default function swapPlugin( options = {} ) {
+const { createFilter } = require('rollup-pluginutils');
+module.exports = function swapPlugin( options = {} ) {
 	const filter = createFilter( options.include, options.exclude );
 	const sourceMap = options.sourceMap !== false;
 
