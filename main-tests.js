@@ -1,37 +1,37 @@
 const { throws, deepEqual } = require('assert');
 
-const mainModule = require('./main.js');
+const mod = require('./main.js');
 
 describe('OLSKRollupSwapTokens', function OLSKRollupSwapTokens() {
 
 	it('throws if param1 not object', function () {
 		throws(function () {
-			mainModule.OLSKRollupSwapTokens(null, {});
+			mod.OLSKRollupSwapTokens(null, {});
 		}, /OLSKErrorInputNotValid/);
 	});
 
 	it('throws if param1 without object.code', function () {
 		throws(function () {
-			mainModule.OLSKRollupSwapTokens({}, {});
+			mod.OLSKRollupSwapTokens({}, {});
 		}, /OLSKErrorInputNotValid/);
 	});
 
 	it('throws if param2 not object', function () {
 		throws(function () {
-			mainModule.OLSKRollupSwapTokens({
+			mod.OLSKRollupSwapTokens({
 				code: '',
 			}, null);
 		}, /OLSKErrorInputNotValid/);
 	});
 
 	it('returns null if no token', function() {
-		deepEqual(mainModule.OLSKRollupSwapTokens({
+		deepEqual(mod.OLSKRollupSwapTokens({
 			code: '',
 		}, {}), null);
 	});
 
 	it('returns null if token not found', function() {
-		deepEqual(mainModule.OLSKRollupSwapTokens({
+		deepEqual(mod.OLSKRollupSwapTokens({
 			code: 'alfa',
 		}, {
 			bravo: 'charlie',
@@ -39,7 +39,7 @@ describe('OLSKRollupSwapTokens', function OLSKRollupSwapTokens() {
 	});
 
 	it('replaces token single', function() {
-		deepEqual(mainModule.OLSKRollupSwapTokens({
+		deepEqual(mod.OLSKRollupSwapTokens({
 			code: 'alfa',
 		}, {
 			alfa: 'bravo',
@@ -49,7 +49,7 @@ describe('OLSKRollupSwapTokens', function OLSKRollupSwapTokens() {
 	});
 
 	it('replaces token multiple', function() {
-		deepEqual(mainModule.OLSKRollupSwapTokens({
+		deepEqual(mod.OLSKRollupSwapTokens({
 			code: 'alfa alfa',
 		}, {
 			alfa: 'bravo',
@@ -59,7 +59,7 @@ describe('OLSKRollupSwapTokens', function OLSKRollupSwapTokens() {
 	});
 
 	it('replaces token multiple [3]', function() { // testing two is insufficient
-		deepEqual(mainModule.OLSKRollupSwapTokens({
+		deepEqual(mod.OLSKRollupSwapTokens({
 			code: 'alfa alfa alfa',
 		}, {
 			alfa: 'bravo',
@@ -69,7 +69,7 @@ describe('OLSKRollupSwapTokens', function OLSKRollupSwapTokens() {
 	});
 
 	it('outputs map if specified', function() {
-		deepEqual(typeof mainModule.OLSKRollupSwapTokens({
+		deepEqual(typeof mod.OLSKRollupSwapTokens({
 			code: 'alfa',
 			map: true,
 		}, {
