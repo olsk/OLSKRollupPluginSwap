@@ -7,7 +7,6 @@
   "dependencies": {
     "rollup-pluginutils": "latest",
 
-    "//": "SOURCE MAPS",
     "magic-string": "latest"
   }
 }
