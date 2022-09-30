@@ -8,8 +8,6 @@
     "rollup-pluginutils": "latest",
 
     "//": "SOURCE MAPS",
-    "magic-string": "latest",
-    
-    "//": "I sacrifice myself for the commas of others"
+    "magic-string": "latest"
   }
 }
